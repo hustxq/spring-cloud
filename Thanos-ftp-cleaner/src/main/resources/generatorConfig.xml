@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--<classPathEntry location="mysql-connector-java-5.1.34.jar"/>-->
+    <context id="v1.0.0" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.112.4.216:3306/bms?useUnicode=true&amp;characterEncoding=gbk&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="bms" password="111111">
+            <!--useUnicode=true&characterEncoding=gbk&zeroDateTimeBehavior=convertToNull-->
+            <!--<property name="useUnicode" value="true"/>-->
+            <!--<property name="characterEncoding" value="gbk"/>-->
+            <!--<property name="zeroDateTimeBehavior" value="convertToNull"/>-->
+        </jdbcConnection>
+        <!--
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="true" />
+        </javaTypeResolver>
+        -->
+
+        <!--数据模型实体类-->
+        <javaModelGenerator targetPackage="com.fw.market.domain" targetProject="src/main/java">
+            <!-- <property name="rootClass" value="sse.boss.core.model.bond.BaseModel" />  -->
+            <property name="trimStrings" value="true"/>
+            <!--<property name="enableSubPackages" value="true" />-->
+        </javaModelGenerator>
+
+        <!--sql xml 映射文件-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <!--<property name="enableSubPackages" value="true" />-->
+        </sqlMapGenerator>
+
+        <!--dao 接口-->
+        <javaClientGenerator targetPackage="com.fw.market.mapper"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER">
+            <!--<property name="enableSubPackages" value="true" />-->
+        </javaClientGenerator>
+
+        <!-- 表 实体类 可配置多表并列即可-->
+               <table tableName="G_USERS" domainObjectName="GUsers" enableCountByExample="false"
+                       enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+                       selectByExampleQueryId="false"/>
+    </context>
+</generatorConfiguration>

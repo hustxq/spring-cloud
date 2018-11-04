@@ -1,0 +1,74 @@
+#EUREKA_ADDR: 196.123.134.162
+#EUREKA_PORT:
+SERVER_PORT: 18053
+server:
+  port: ${SERVER_PORT:18053}
+  tomcat:
+    uri-encoding: UTF-8
+    version: ${TOMCAT_VERSION:8.0.33}
+    max-threads: ${TOMCAT_MAXTHREADS:500} #max threads for parallel deal task
+    maxConnections: ${TOMCAT_MAXCONNECTION:1000} #max nums for connect to server but wait for deal
+    acceptCount: ${TOMCAT_ACCEPTCOUNT:2000} #max nums can be accepted but wait for connect, retrun connect refused if exceed
+spring:
+  application:
+    name: ${app.name}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+#    name: bms
+#    url: jdbc:mysql://10.112.4.216:3306/bms?useUnicode=true&characterEncoding=gbk&zeroDateTimeBehavior=convertToNull
+#    username: bms
+#    password: 111111
+    name: test
+    url: jdbc:mysql://123.207.238.215:3306/test?characterEncoding=utf8&useSSL=true
+    username: mysql
+    password: 111111
+    #使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    filters: stat,slf4j
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  cloud:
+    inetutils:
+      preferred-networks: 196.
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.fw.market.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: true
+eureka:
+  instance:
+    metadataMap:
+      instanceId: ${app.name}:${spring.application_instance_id:${random.value}}
+    preferIpAddress: true
+  #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+  client:
+    #    eurekaServerConnectTimeoutSeconds: 15
+    #    eurekaServerReadTimeoutSeconds: 20
+    #    fetch-registry: true
+    #    register-with-eureka: true
+    #    region: default
+    #    preferSameZone: false
+    serviceUrl:
+      defaultZone: http://${EUREKA_ADDR:localhost}:${EUREKA_PORT:8761}/eureka/
+
+#配置mybatis的分页插件pageHelper
+pagehelper:
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  reasonable: true
+  helper-dialect: mysql   #配置mysql数据库方言

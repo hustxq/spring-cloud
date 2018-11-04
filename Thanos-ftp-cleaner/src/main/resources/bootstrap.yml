@@ -1,0 +1,19 @@
+APP_NAME: fw-app-market
+#EUREKA_PORT: 18050
+#EUREKA_ADDR: 196.131.6.222
+app:
+  name: ${APP_NAME:fw-app-market}
+spring:
+  profiles:
+    active: ${ACTIVE_MODE:dev}
+#  cloud:
+#    config:
+#      uri: http://${spring_cloud_config_host:10.112.2.126}:${spring_cloud_config_port:18010}
+#      name: ${spring_cloud_config_name:${app.name}}
+#      profile: ${spring_cloud_config_profile:dev}
+#      discovery:
+#        enabled: true
+#        serviceId: ${CONFIG_CENTER_NAME:bmsp-config-center}
+
+#dataservice:
+#  url: http://10.112.2.126:18011/

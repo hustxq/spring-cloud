@@ -1,0 +1,67 @@
+#EUREKA_ADDR: 196.123.132.150
+#10.112.2.126
+#EUREKA_PORT:
+SERVER_PORT: 18053
+server:
+  port: ${SERVER_PORT:18053}
+  tomcat:
+    uri-encoding: UTF-8
+    version: ${TOMCAT_VERSION:8.0.33}
+    max-threads: ${TOMCAT_MAXTHREADS:500} #max threads for parallel deal task
+    maxConnections: ${TOMCAT_MAXCONNECTION:1000} #max nums for connect to server but wait for deal
+    acceptCount: ${TOMCAT_ACCEPTCOUNT:2000} #max nums can be accepted but wait for connect, retrun connect refused if exceed
+spring:
+  application:
+    name: ${app.name}
+  mvc:
+      throw-exception-if-no-handler-found: true
+  resources:
+      add-mappings: false
+  datasource:
+      url: jdbc:mysql://10.112.4.216:3306/bms_test?useUnicode=true&characterEncoding=gbk&zeroDateTimeBehavior=convertToNull
+      username: bms
+      password: 111111
+      driver-class-name: com.mysql.jdbc.Driver
+      initalSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.fw.market.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: true
+eureka:
+  instance:
+    metadataMap:
+      instanceId: ${app.name}:${spring.application_instance_id:${random.value}}
+    preferIpAddress: true
+  client:
+    #    eurekaServerConnectTimeoutSeconds: 15
+    #    eurekaServerReadTimeoutSeconds: 20
+    fetch-registry: true
+    register-with-eureka: true
+    region: default
+    preferSameZone: false
+    serviceUrl:
+      defaultZone: http://${EUREKA_ADDR:localhost}:${EUREKA_PORT:8761}/eureka/
+
+#配置mybatis的分页插件pageHelper
+pagehelper:
+   offset-as-page-num: true
+   row-bounds-with-count: true
+   reasonable: true
+   helper-dialect: mysql   #配置mysql数据库方言
+   #临时文件夹
+template:
+   tempPath: /opt/notice/temp          #     D:\notice\temp
+#dw:
+#  server: http://10.112.9.223:18002  #64370
+#  flag: BM_LBS_WEB #LBS 发行上市系统标识
+#  username: bds_lds
+#  password: 1E0F6BB618DEDEFFF02CED230DB80DF0EED50BA0704CEAA7CB2029DE9C1D0DB425D3B9239F69404A07919DC86C568877ABC056BC6E2CC98F10418B04062B1F328F95F4196DE5C41015C240F4B2750D339F807C60458094B3B5AC7379E40136552CFDE1549F475A57625A3697794C7AA1B9BC1F9C3B7A77AC051378CC90DBAD07
+#  sigValue: 20170515XXDW
+
+#bmsp:
+#  server: http://${BMSP_ADDR:localhost}:${BMSP_PORT:7000}
